@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MSU-MCEST</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #2d5a3d;
+      --green-mid: #3e7a54;
+      --green-light: #e8f2ec;
+      --accent: #f0a500;
+      --text: #1a1a1a;
+      --muted: #6b7068;
+      --border: #e2e4df;
+      --bg: #f7f8f5;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ---- TOP BAR ---- */
+    .topbar {
+      background: var(--green);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      text-align: center;
+      padding: 7px 20px;
+      letter-spacing: 0.3px;
+    }
+    .topbar a { color: var(--accent); text-decoration: none; }
+
+    /* ---- NAV ---- */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      height: 64px;
+      position: sticky; top: 0; z-index: 99;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      color: white; font-size: 13px; font-weight: 400;
+    }
+    .logo-label { font-size: 15px; font-weight: 600; }
+    .logo-label span { display: block; font-size: 11px; font-weight: 300; color: var(--muted); }
+
+    .nav-menu { display: flex; gap: 2px; list-style: none; }
+    .nav-menu a {
+      color: var(--muted); text-decoration: none;
+      font-size: 13.5px; padding: 6px 12px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-menu a:hover { background: var(--green-light); color: var(--green); }
+
+    .nav-btn {
+      background: var(--green); color: white;
+      border: none; border-radius: 8px;
+      padding: 9px 20px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: var(--green-mid); }
+
+    /* ---- HERO ---- */
+    .hero {
+      background: var(--bg);
+      padding: 80px 6% 70px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green-mid);
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4.5vw, 54px);
+      line-height: 1.1; font-weight: 400;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
+    .hero-desc {
+      color: var(--muted); font-size: 16px; line-height: 1.75;
+      max-width: 520px; margin-bottom: 36px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-solid {
+      background: var(--green); color: white;
+      padding: 12px 26px; border-radius: 8px;
+      text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-solid:hover { background: var(--green-mid); }
+    .btn-ghost {
+      border: 1.5px solid var(--border); color: var(--text);
+      padding: 11px 24px; border-radius: 8px;
+      text-decoration: none; font-size: 14px; font-weight: 400;
+      transition: border-color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+
+    .hero-badge {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .badge-year {
+      font-family: 'DM Serif Display', serif;
+      font-size: 46px; color: var(--green); line-height: 1;
+    }
+    .badge-line { width: 40px; height: 2px; background: var(--accent); margin: 12px auto; }
+    .badge-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ---- STATS ---- */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat {
+      padding: 28px 5%;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px; color: var(--green); display: block; line-height: 1;
+    }
+    .stat-txt { font-size: 12px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ---- SECTION WRAPPER ---- */
+    .section { padding: 72px 6%; }
+    .section.alt { background: var(--bg); }
+    .sec-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green-mid);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    }
+    .sec-tag::before {
+      content: ''; width: 20px; height: 2px; background: var(--accent);
+    }
+    .sec-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 3vw, 34px); font-weight: 400;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .sec-desc { color: var(--muted); max-width: 600px; font-size: 15px; line-height: 1.75; }
+
+    /* ---- ABOUT ---- */
+    .about-cols {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 56px; margin-top: 48px;
+    }
+    .about-copy p {
+      color: var(--muted); font-size: 14.5px; line-height: 1.85; margin-bottom: 16px;
+    }
+    .vm-list { display: flex; flex-direction: column; gap: 16px; }
+    .vm-item {
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 22px;
+      transition: border-color 0.2s;
+    }
+    .vm-item:hover { border-color: var(--green); }
+    .vm-item h4 {
+      font-size: 14px; font-weight: 600; color: var(--green);
+      margin-bottom: 8px;
+    }
+    .vm-item p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+
+    /* ---- PROGRAMS ---- */
+    .programs-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-top: 44px;
+    }
+    .prog-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px 20px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .prog-card:hover {
+      box-shadow: 0 4px 16px rgba(45,90,61,0.1);
+      transform: translateY(-2px);
+    }
+    .prog-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--green); margin-bottom: 16px;
+    }
+    .prog-card h4 { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 7px; line-height: 1.35; }
+    .prog-card p { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+    /* ---- ADMISSION ---- */
+    .adm-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 44px;
+    }
+    .adm-box {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .adm-head {
+      background: var(--green); color: white;
+      padding: 16px 20px; font-size: 14px; font-weight: 600;
+    }
+    .adm-body { padding: 20px; }
+    .adm-body li {
+      list-style: none; font-size: 13px; color: var(--muted);
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+      padding-left: 18px; position: relative;
+    }
+    .adm-body li::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent); position: absolute; left: 0; top: 13px;
+    }
+    .adm-body li:last-child { border-bottom: none; }
+
+    /* ---- NEWS ---- */
+    .news-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 44px;
+    }
+    .news-card {
+      border-radius: 12px; border: 1px solid var(--border);
+      overflow: hidden; background: var(--white);
+      transition: box-shadow 0.2s;
+    }
+    .news-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+    .news-stripe { height: 4px; background: var(--green); }
+    .news-inner { padding: 22px 20px; }
+    .news-meta {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--muted); margin-bottom: 12px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .news-inner h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.45; }
+    .news-inner p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ---- CONTACT ---- */
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 56px; margin-top: 44px;
+    }
+    .contact-row {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .c-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--green-light); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .c-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 3px; }
+    .c-val { font-size: 14.5px; color: var(--text); }
+    .c-val a { color: var(--green); text-decoration: none; }
+    .map-box {
+      background: var(--green-light);
+      border-radius: 12px; height: 100%; min-height: 240px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      border: 1px solid var(--border);
+    }
+    .map-box .pin { font-size: 36px; }
+    .map-box p { font-size: 13px; color: var(--muted); }
+    .map-box a {
+      font-size: 13px; font-weight: 600; color: var(--green);
+      text-decoration: none; border-bottom: 1.5px solid var(--green);
+      padding-bottom: 1px;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--green);
+      color: rgba(255,255,255,0.75);
+      padding: 52px 6% 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px; margin-bottom: 40px;
+    }
+    .footer-brand p {
+      font-size: 13px; line-height: 1.75; margin-top: 10px;
+      max-width: 300px;
+    }
+    .footer-brand h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px; color: white; font-weight: 400;
+    }
+    .footer-col h5 {
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); font-weight: 600; margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 13.5px; color: rgba(255,255,255,0.7);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-bar {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 24px; display: flex;
+      justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bar p { font-size: 12px; }
+    .footer-bar a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-bar a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-badge { display: none; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .about-cols, .adm-grid, .news-grid, .contact-wrap, .footer-grid { grid-template-columns: 1fr; }
+      .programs-grid { grid-template-columns: 1fr 1fr; }
+      .nav-menu { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  MSU System — Mindanao State University &nbsp;|&nbsp;
+  <a href="https://msumcest.edu.ph" target="_blank">Visit the Official Website →</a>
+</div>
+
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-icon">MSU</div>
+    <div class="logo-label">
+      MSU-MCEST
+      <span>Maigo, Lanao del Norte</span>
+    </div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#admission">Admission</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-btn" href="https://msumcest.edu.ph" target="_blank">Official Site</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">MSU System · Est. 1948</div>
+    <h1>Maigo College of<br/>Education, Science<br/>&amp; Technology</h1>
+    <p class="hero-desc">A state college in Maigo, Lanao del Norte committed to transformative education, research, innovation, and peace &amp; development in Mindanao.</p>
+    <div class="hero-actions">
+      <a class="btn-solid" href="#admission">Admission Info</a>
+      <a class="btn-ghost" href="#programs">View Programs</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="badge-year">1948</div>
+    <div class="badge-line"></div>
+    <div class="badge-label">Year<br/>Founded</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num">75+</span>
+    <span class="stat-txt">Years of Service</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">3</span>
+    <span class="stat-txt">Academic Colleges</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">8+</span>
+    <span class="stat-txt">Degree Programs</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">MSU</span>
+    <span class="stat-txt">System Member</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="sec-tag">About the Institution</div>
+  <h2 class="sec-title">A Legacy Rooted in Mindanao</h2>
+  <p class="sec-desc">From a community-founded high school to a fully integrated constituent of the MSU System — MSU-MCEST has grown for over 75 years.</p>
+
+  <div class="about-cols">
+    <div class="about-copy">
+      <p>The institution traces its roots to the Maigo High School, founded in School Year 1948–1949 under the Maigo Parent Teacher Association. It was converted into the Maigo Trade School under Republic Act No. 2408, and later integrated into the Mindanao State University System through MSU Board of Regents Resolution No. 11-A, s. 2001.</p>
+      <p>Today, MSU-MCEST reflects a modern academic identity — aligned with digital careers, teacher education, science, and technology for students across Lanao del Norte and the broader Mindanao region.</p>
+      <p>As part of the MSU System, MSU-MCEST shares the university's mandate: promoting quality education and advancing the development of Muslim and cultural minority communities in Mindanao.</p>
+    </div>
+    <div class="vm-list">
+      <div class="vm-item">
+        <h4>Vision</h4>
+        <p>A globally recognized institution in education, science, and technology, advancing instruction, research, innovations, peace and development.</p>
+      </div>
+      <div class="vm-item">
+        <h4>Mission</h4>
+        <p>Provide transformative education that fosters excellence through instruction, research, extension, innovation, and peace and development.</p>
+      </div>
+      <div class="vm-item">
+        <h4>Location</h4>
+        <p>Poblacion, Maigo, Lanao del Norte, Philippines — part of the MSU System serving Mindanao, Sulu, and Palawan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section alt" id="programs">
+  <div class="sec-tag">Academics</div>
+  <h2 class="sec-title">Programs Offered</h2>
+  <p class="sec-desc">MSU-MCEST offers undergraduate, graduate, and certificate programs in education, science, and technology.</p>
+
+  <div class="programs-grid">
+    <div class="prog-card">
+      <div class="prog-dot"></div>
+      <h4>BS Information Technology</h4>
+      <p>Training for careers in software, networks, and digital systems.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background:var(--accent)"></div>
+      <h4>BS Computer Science</h4>
+      <p>Computation, algorithms, and software engineering foundations.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot"></div>
+      <h4>Bachelor of Secondary Education</h4>
+      <p>Preparing future secondary-level educators across core subjects.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background:var(--accent)"></div>
+      <h4>Bachelor of Elementary Education</h4>
+      <p>Child-centered teacher training for the elementary level.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot"></div>
+      <h4>Industrial Technology</h4>
+      <p>Technical-vocational programs recognized across Southern Philippines.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background:var(--accent)"></div>
+      <h4>Graduate Programs</h4>
+      <p>Advanced postgraduate studies for professional development.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot"></div>
+      <h4>TESDA Certificates</h4>
+      <p>Accredited short courses for immediate industry employment.</p>
+    </div>
+    <div class="prog-card">
+      <div class="prog-dot" style="background:var(--accent)"></div>
+      <h4>Certificate Courses</h4>
+      <p>Specialized programs for skills upgrading and continuing education.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSION -->
+<section class="section" id="admission">
+  <div class="sec-tag">How to Enroll</div>
+  <h2 class="sec-title">Admission Requirements</h2>
+  <p class="sec-desc">Prepare the following documents when applying. Requirements vary by applicant type.</p>
+
+  <div class="adm-grid">
+    <div class="adm-box">
+      <div class="adm-head">Freshmen</div>
+      <ul class="adm-body">
+        <li>HS Report Card / Form 138-A (Original)</li>
+        <li>Certificate of Good Moral Character</li>
+        <li>Birth Certificate (PSA/NSO)</li>
+        <li>MSU-SASE or CET Report of Rating</li>
+        <li>4 copies 2"×2" ID photo (name at back)</li>
+      </ul>
+    </div>
+    <div class="adm-box">
+      <div class="adm-head">Transferees</div>
+      <ul class="adm-body">
+        <li>Honorable Dismissal</li>
+        <li>Evaluated Transcript of Records</li>
+        <li>Certificate of Good Moral Character</li>
+        <li>Birth Certificate (PSA/NSO)</li>
+        <li>MSU-SASE or CET Report of Rating</li>
+        <li>4 copies 2"×2" ID photo</li>
+      </ul>
+    </div>
+    <div class="adm-box">
+      <div class="adm-head">Second Coursers</div>
+      <ul class="adm-body">
+        <li>Honorable Dismissal</li>
+        <li>Evaluated Transcript of Records</li>
+        <li>Certificate of Good Moral Character</li>
+        <li>Birth Certificate (PSA/NSO)</li>
+        <li>4 copies 2"×2" ID photo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section alt" id="news">
+  <div class="sec-tag">Latest Updates</div>
+  <h2 class="sec-title">News &amp; Announcements</h2>
+  <p class="sec-desc">Stay up to date with campus events, academic news, and official announcements.</p>
+
+  <div class="news-grid">
+    <div class="news-card">
+      <div class="news-stripe"></div>
+      <div class="news-inner">
+        <div class="news-meta">
+          <span>Announcement</span>
+          <span>March 2026</span>
+        </div>
+        <h4>LEARN GOOD (LG) Committee Gears Up</h4>
+        <p>The LG Committee convened under Superintendent Atty. Jamaloden A. Basar to prepare for the upcoming LEARN GOOD program launch on campus.</p>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-stripe" style="background:var(--accent)"></div>
+      <div class="news-inner">
+        <div class="news-meta">
+          <span>Enrollment</span>
+          <span>A.Y. 2026–2027</span>
+        </div>
+        <h4>Enrollment Now Open</h4>
+        <p>MSU-MCEST invites all incoming freshmen, transferees, and returning students to complete enrollment. Visit the Registrar's Office for guidance.</p>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-stripe"></div>
+      <div class="news-inner">
+        <div class="news-meta">
+          <span>MSU System</span>
+          <span>2025</span>
+        </div>
+        <h4>New MSU System President Appointed</h4>
+        <p>Atty. Paisalin P. Tago was appointed MSU System President by President Marcos in June 2025, leading all constituent units including MSU-MCEST.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="sec-tag">Reach Us</div>
+  <h2 class="sec-title">Contact Information</h2>
+  <p class="sec-desc">We welcome inquiries from prospective students, partners, and alumni.</p>
+
+  <div class="contact-wrap">
+    <div>
+      <div class="contact-row">
+        <div class="c-icon">📍</div>
+        <div>
+          <div class="c-label">Address</div>
+          <div class="c-val">Poblacion, Maigo, Lanao del Norte, Philippines</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="c-icon">📞</div>
+        <div>
+          <div class="c-label">Contact Number</div>
+          <div class="c-val">0919-328-7096</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="c-icon">🌐</div>
+        <div>
+          <div class="c-label">Official Website</div>
+          <div class="c-val"><a href="https://msumcest.edu.ph" target="_blank">msumcest.edu.ph</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="c-icon">📘</div>
+        <div>
+          <div class="c-label">Facebook</div>
+          <div class="c-val"><a href="https://www.facebook.com/MSUMaigoCIPP" target="_blank">MSU-Maigo College (CIPP)</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="map-box">
+      <div class="pin">🗺️</div>
+      <p>Maigo, Lanao del Norte, Philippines</p>
+      <a href="https://maps.google.com/?q=Maigo+Lanao+del+Norte+Philippines" target="_blank">Open in Google Maps</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>MSU-MCEST</h3>
+      <p>MSU-Maigo College of Education, Science and Technology — a constituent unit of the Mindanao State University System, serving Mindanao, Sulu, and Palawan.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#admission">Admission</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>MSU System</h5>
+      <ul>
+        <li><a href="https://www.msumain.edu.ph" target="_blank">MSU Main Campus</a></li>
+        <li><a href="https://msumcest.edu.ph" target="_blank">MSU-MCEST Official</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <p>© 2026 MSU-Maigo College of Education, Science and Technology. All rights reserved.</p>
+    <p>Unofficial landing page · <a href="https://msumcest.edu.ph" target="_blank">Official Site →</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
