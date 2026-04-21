@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to MSU-MCEST...</title>
+    <meta http-equiv="refresh" content="5;url=https://msumcest.edu.ph">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-panel">
+            <div class="loader-container">
+                <div class="spinner"></div>
+            </div>
+            <h1 class="title">MSU-MCEST</h1>
+            <h2 class="subtitle">Mindanao State University<br>Maigo College of Education, Science and Technology</h2>
+            <p class="description">
+                You are being redirected to the official website.<br>
+                If you are not redirected automatically within 5 seconds, please click the button below.
+            </p>
+            <a href="https://msumcest.edu.ph" class="btn-primary">
+                Go to Website Now
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <script>
+        const progressBar = document.querySelector('.progress-bar');
+        progressBar.style.width = '100%';
+        progressBar.style.transition = 'width 5s linear';
+        
+        void progressBar.offsetWidth;
+        
+        progressBar.style.width = '0%';
+        
+        setTimeout(function() {
+            window.location.href = "https://msumcest.edu.ph";
+        }, 5000);
+    </script>
+</body>
+</html>
